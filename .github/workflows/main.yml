@@ -8,7 +8,6 @@ on:
     
 jobs:
   render:
-    # Instructions
     runs-on: ubuntu-latest
     permissions: 
       contents: write
