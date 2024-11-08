@@ -1,0 +1,46 @@
+# .git/workflows/main.yml
+
+name: Render README
+
+on:
+  push:
+    branches: [main]
+    
+jobs:
+  render:
+    # Instructions
+    runs-on: ubuntu-latest
+    permissions: 
+      contents: write
+      
+    steps:
+      - name:  Checkout repository
+        uses:  actions/checkout@v4.2.2
+        
+      - name:  Setup Quarto
+        uses:  quarto-dev/quarto-actions/setup@v2
+        with:
+         version: LATEST
+      
+      - name:  Install R Dependencies
+        run: |
+          Rscript -e "install.packages('renv', repos='https://packagemanager.posit.co/cran/latest')"
+          Rscript -e "renv::restore(repos='packagemanager.posit.co/cran/latest')"
+      
+     -  name: Render Quarto Document 
+        run: | 
+          quarto render README.qmd --to gfm --ouput README.md
+         
+     # Commit and push changes to README.md
+     - name: Commit README.md
+       run: |
+         git config --global user.name "github-actions[bot]"
+         git config --global user.email "github-actions[bot]@users.noreply.github.com"
+         git add README.md
+         git commit -m "Update README.md from readme.qmd"
+         git push
+       env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+ 
+        
