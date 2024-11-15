@@ -26,10 +26,11 @@ jobs:
 
     # 
     - name: Install R dependencies
-      run: |
-        Rscript -e "install.packages('renv', repos = 'https://packagemanager.posit.co/cran/latest')"
-        Rscript -e "renv::restore(repos = 'https://packagemanager.posit.co/cran/latest')"
-        
+#      run: |
+#        Rscript -e "install.packages('renv', repos = 'https://packagemanager.posit.co/cran/latest')"
+#        Rscript -e "renv::restore(repos = 'https://packagemanager.posit.co/cran/latest')"
+        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b
+      
     # Render the readme.qmd to README.md
     - name: Render Quarto document
       run: |
@@ -52,3 +53,20 @@ jobs:
         quarto publish readme.qmd
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        
+    steps:
+      - uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b
+
+      - uses: ./setup-r
+        with:
+          use-public-rspm: true
+
+      - uses: ./setup-r-dependencies
+        with:
+          extra-packages: any::rcmdcheck
+          needs: check
+
+      - uses: ./check-r-package
+        with:
+          upload-snapshots: true
+          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
