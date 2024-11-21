@@ -10,6 +10,8 @@ One Change; 2nd change (but now using Albert's yaml)
 ```{r}
 #| echo: FALSE
 
+library(rmarkdown)
+library(knitr)
 current_time = Sys.time() |>
   format("%m/%d/%Y %H:%M")
 ```
