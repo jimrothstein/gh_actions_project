@@ -43,7 +43,8 @@ jobs:
     # Render the readme.qmd to README.md
     - name: Render Quarto document
       run: |
-        quarto render README.qmd --to gfm --output README.md
+#        quarto render README.qmd --to gfm --output README.md
+        quarto render 280_emacs_notes.qmd --to gfm --output 280_emacs_notes.md 
 
     # Commit and push changes to README.md
     - name: Commit README.md
@@ -51,6 +52,7 @@ jobs:
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git add README.md
+	git add 280_emacs_notes.md
         git commit -m "Update README.md from readme.qmd"
         git push
       env:
