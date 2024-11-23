@@ -90,9 +90,6 @@ Create a footnote: [^1]
 :::
 
 ```
-<!--
-{{< include _future_work.qmd >}}
--->
 
 ***
 ::: {.content-visible when-format="html"}
