@@ -1,4 +1,4 @@
-name: ghaQuatro Render README
+name: main
 
 # This workflow will run on push or pull requests to the main branch
 on:
