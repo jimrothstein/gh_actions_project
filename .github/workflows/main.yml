@@ -1,12 +1,9 @@
-name: ghaQuatro Render README
+name: main
 
 # This workflow will run on push or pull requests to the main branch
-on:
+on:  workflow_dispatch
   # schedule:
   #  - cron: '*/10 * * * *'
-  push:
-    # branches: [main]
-    branches: * 
 
 jobs:
   render:
